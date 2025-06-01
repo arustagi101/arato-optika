@@ -2,6 +2,28 @@
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+  keywords?: string;
+  type?: 'website' | 'article';
+}
+
+const { 
+  title, 
+  description = "Arató Optika - Prémium minőségű szemüvegek, kontaktlencsék és látásvizsgálat Budapesten. Több mint 30 éves szakmai tapasztalat és személyre szabott szolgáltatások.",
+  ogImage = "/images/webp/children_eye_exam_v2.webp", 
+  canonicalUrl = Astro.url.pathname,
+  keywords = "optika, szemüveg, kontaktlencse, látásvizsgálat, szemvizsgálat, optikus, Budapest, szemüvegkeret, napszemüveg, optometrista",
+  type = "website"
+} = Astro.props;
+
+const siteUrl = "https://aratooptika.hu";
+const fullCanonicalUrl = `${siteUrl}${canonicalUrl}`;
+const fullOgImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 ---
 
 <!doctype html>
@@ -12,17 +34,53 @@ import "../styles/global.css";
 			name="viewport"
 			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover"
 		/>
+		
+		<!-- Primary Meta Tags -->
+		<title>{title} | Arató Optika</title>
+		<meta name="title" content={`${title} | Arató Optika`} />
+		<meta name="description" content={description} />
+		<meta name="keywords" content={keywords} />
+		<meta name="author" content="Arató Optika" />
+		<meta name="robots" content="index, follow" />
+		<meta name="language" content="Hungarian" />
+		<meta name="revisit-after" content="7 days" />
+		<meta name="geo.region" content="HU" />
+		<meta name="geo.placename" content="Budapest" />
+		
+		<!-- Canonical URL -->
+		<link rel="canonical" href={fullCanonicalUrl} />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content={type} />
+		<meta property="og:url" content={fullCanonicalUrl} />
+		<meta property="og:title" content={`${title} | Arató Optika`} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={fullOgImageUrl} />
+		<meta property="og:locale" content="hu_HU" />
+		<meta property="og:site_name" content="Arató Optika" />
+		
+		<!-- Social Media Profiles -->
+		<!-- 1149 Budapest, Nagy Lajos király útja 214. -->
+		<meta property="business:contact_data:street_address" content="Nagy Lajos király útja 214" />
+		<meta property="business:contact_data:locality" content="Budapest" />
+		<meta property="business:contact_data:postal_code" content="1149" />
+		<meta property="business:contact_data:country_name" content="Hungary" />
+		<meta property="business:contact_data:email" content="info@aratooptika.hu" />
+		<meta property="business:contact_data:phone_number" content="+36 1 220 5999" />
+		<meta property="business:hours:day" content="monday through friday 10:00-18:00" />
+		
+		<!-- App and Device Meta -->
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta
-			name="apple-mobile-web-app-status-bar-style"
-			content="black-translucent"
-		/>
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 		<meta name="theme-color" content="#ffffff" />
-		<meta name="format-detection" content="telephone=no" />
-		<link rel="icon" href="/favicon.svg" />
+		<meta name="format-detection" content="telephone=yes" />
+		
+		<!-- Favicon -->
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		
+		<!-- Generator -->
 		<meta name="generator" content={Astro.generator} />
-		<title>{Astro.props.title} | Arató Optika</title>
 	</head>
 	<body class="min-h-screen flex flex-col bg-base-100 text-neutral">
 		<Navbar />
