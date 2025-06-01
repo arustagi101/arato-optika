@@ -1,0 +1,31 @@
+---
+import { sectionContent } from '../data/index';
+import { products } from '../data/products';
+---
+
+<section class="py-20 bg-base-100">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">{sectionContent.featuredProducts.title}</h2>
+      <p class="text-base-content/70 max-w-xl mx-auto">{sectionContent.featuredProducts.description}</p>
+    </div>
+    
+    <div class="carousel carousel-center max-w-full p-4 space-x-6 rounded-box">
+      {products.flatMap(product => product.brands.map(brand => (
+        <div class="carousel-item flex flex-col items-center justify-center">
+          <div class="w-32 h-32 flex items-center justify-center bg-white rounded-lg shadow-md p-4">
+            <img src={brand.logo} alt={brand.name} class="max-h-20 max-w-full object-contain" />
+          </div>
+          <span class="mt-2 text-sm font-medium text-gray-700">{brand.name}</span>
+        </div>
+      )))}
+    </div>
+    
+    <div class="text-center mt-10">
+      <a href={sectionContent.featuredProducts.viewAllUrl} class="btn btn-outline gap-2">
+        {/* <Icon name="tabler:arrow-right" class="w-5 h-5" /> */}
+        {sectionContent.featuredProducts.viewAllText}
+      </a>
+    </div>
+  </div>
+</section>

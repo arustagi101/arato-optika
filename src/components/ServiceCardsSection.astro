@@ -1,0 +1,25 @@
+---
+// Service cards grid section
+import { services } from '../data/services';
+import { sectionContent } from '../data/index';
+---
+
+<section class="py-16 bg-base-100">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">{sectionContent.services.title}</h2>
+      <p class="text-base-content/70 max-w-xl mx-auto">{sectionContent.services.description}</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {services.map(service => (
+        <div class="card bg-base-200 shadow-md hover:shadow-lg transition-shadow duration-300">
+          <div class="card-body">
+            <h3 class="card-title">{service.title}</h3>
+            <p>{service.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,131 @@
+---
+// BrandScroller.astro
+export interface Props {
+  brands: {
+    name: string;
+    logo?: string;
+  }[];
+}
+
+const { brands } = Astro.props;
+
+// Function to get the first letter of the brand name for fallback
+const getInitial = (name: string) => name.charAt(0).toUpperCase();
+
+// Responsive sizes for different breakpoints
+const cardSizes = {
+  sm: 'w-16 h-16',
+  md: 'w-20 h-20',
+  lg: 'w-24 h-24',
+};
+
+const logoMaxHeights = {
+  sm: 'max-h-12',
+  md: 'max-h-14',
+  lg: 'max-h-16',
+};
+
+// Add a small gap item to create space between loops
+const gapItem = { name: 'gap', isGap: true };
+---
+
+<div class="relative w-full overflow-hidden py-2">
+  <div class="flex items-center whitespace-nowrap">
+    <div class="inline-flex items-center animate-scroll gap-4 md:gap-6 px-4">
+      {brands.map((brand) => (
+        <div class={`relative group flex-shrink-0 ${cardSizes.sm} ${cardSizes.md} ${cardSizes.lg} flex items-center justify-center bg-white rounded-lg md:rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300`}>
+          {brand.logo ? (
+            <img 
+              src={brand.logo} 
+              alt={brand.name}
+              class={`${logoMaxHeights.sm} ${logoMaxHeights.md} ${logoMaxHeights.lg} max-w-[80%] object-contain transition-transform duration-300 group-hover:scale-110`}
+              loading="lazy"
+              title={brand.name}
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+              decoding="async"
+            />
+          ) : null}
+          <div class="hidden items-center justify-center w-full h-full bg-gray-50 rounded-lg md:rounded-xl">
+            <span class="text-xl md:text-2xl font-bold text-gray-400">{getInitial(brand.name)}</span>
+          </div>
+        </div>
+      ))}
+      
+      {/* Add a gap item at the end of the first set */}
+      <div class="flex-shrink-0 w-4" aria-hidden="true"></div>
+      
+      {/* Duplicate set with gap at the beginning */}
+      <div class="flex-shrink-0 w-4" aria-hidden="true"></div>
+      
+      {brands.map((brand) => (
+        <div class={`relative flex-shrink-0 ${cardSizes.sm} ${cardSizes.md} ${cardSizes.lg} flex items-center justify-center bg-white rounded-lg md:rounded-xl shadow-sm border border-gray-100`} aria-hidden="true">
+          {brand.logo ? (
+            <img 
+              src={brand.logo} 
+              alt=""
+              class={`${logoMaxHeights.sm} ${logoMaxHeights.md} ${logoMaxHeights.lg} max-w-[80%] object-contain`}
+              loading="lazy"
+              aria-hidden="true"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+              decoding="async"
+            />
+          ) : null}
+          <div class="hidden items-center justify-center w-full h-full bg-gray-50 rounded-lg md:rounded-xl">
+            <span class="text-xl md:text-2xl font-bold text-gray-400">{getInitial(brand.name)}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+  
+  {/* Gradient fade effect */}
+  <div class="absolute top-0 right-0 w-12 md:w-20 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+  <div class="absolute top-0 left-0 w-12 md:w-20 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+</div>
+
+<style>
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-50% - 1rem));
+    }
+  }
+  
+  .animate-scroll {
+    display: inline-flex;
+    animation: scroll 60s linear infinite;
+    padding: 0.5rem 0;
+  }
+  
+  .animate-scroll:hover {
+    animation-play-state: paused;
+  }
+  
+  @media (max-width: 639px) {
+    .animate-scroll {
+      animation-duration: 45s;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .animate-scroll {
+      animation: none;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 0.5rem;
+      width: 100%;
+    }
+    
+    .animate-scroll > div:last-child {
+      display: none;
+    }
+    
+    /* Hide gradient fades when not scrolling */
+    .animate-scroll + .absolute {
+      display: none;
+    }
+  }
+</style>

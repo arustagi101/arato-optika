@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductSection from '../components/ProductSection.astro';
+import { products } from '../data/products';
+---
+
+<Layout title="Termékeink - Arató Optika">
+  <main class="min-h-screen">
+    <section class="py-12 bg-gradient-to-b from-base-200 to-base-100 md:py-16">
+      <div class="container px-4 mx-auto text-center sm:px-6 lg:px-8">
+        <h1 class="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl md:text-5xl">Termékeink</h1>
+        <p class="max-w-3xl mx-auto text-base leading-relaxed text-gray-600 sm:text-lg md:text-xl">
+          Széles választékban kínálunk szemüvegkereteket, napszemüvegeket, kontaktlencséket és szemüveglencséket. Szakértő tanácsadással segítünk a tökéletes választásban.
+        </p>
+      </div>
+    </section>
+
+    <section class="bg-white md:py-8">
+      <div class="container px-4 mx-auto max-w-6xl sm:px-6 lg:px-8">
+        <div class="space-y-16 md:space-y-20 lg:space-y-24">
+          {products.map((product, index) => {
+            const sectionId = `product-${index}`;
+            const isFirst = index === 0;
+            const isLast = index === products.length - 1;
+            
+            return (
+              <div 
+                data-section={sectionId} 
+                class="relative"
+              >
+                <ProductSection
+                  title={product.title}
+                  description={product.description}
+                  imageUrl={product.imageUrl}
+                  imageAlt={product.title}
+                  reverse={index % 2 !== 0}
+                  features={product.features}
+                  callout={product.callout}
+                  brands={product.brands}
+                />
+                
+                {!isLast && (
+                  <div class="absolute left-0 w-full h-px -bottom-8 bg-gradient-to-r from-transparent via-gray-100 to-transparent" />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

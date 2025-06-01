@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { services } from '../data/services';
+---
+
+<Layout title="Szolgáltatásaink - Arató Optika">
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="py-12 bg-gradient-to-b from-base-200 to-base-100 md:py-16">
+      <div class="container px-4 mx-auto text-center sm:px-6 lg:px-8">
+        <h1 class="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl md:text-5xl">Szolgáltatásaink</h1>
+        <p class="max-w-3xl mx-auto text-base leading-relaxed text-gray-600 sm:text-lg md:text-xl">
+          Több mint 30 éves tapasztalattal, modern eszközökkel és szakértői csapatunkkal biztosítjuk ügyfeleink számára a legjobb minőségű szemészeti és optikai szolgáltatásokat.
+        </p>
+      </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="py-12 bg-white">
+      <div class="container px-4 mx-auto max-w-6xl sm:px-6 lg:px-8">
+        <div class="grid gap-8 md:grid-cols-2">
+          {services.map((service) => (
+            <div class="p-6 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 h-full">
+              <div class="flex flex-col h-full">
+                <img 
+                  src={service.imageUrl} 
+                  alt={service.imageAlt} 
+                  class="w-full h-48 object-cover rounded-lg mb-4" 
+                  loading="lazy" 
+                />
+                <h2 class="text-2xl font-bold text-gray-900 mb-3">{service.title}</h2>
+                <div class="prose prose-sm text-gray-600 flex-grow">
+                  <p>{service.description}</p>
+                  <ul class="mt-3 space-y-1">
+                    {service.features.map((feature) => (
+                      <li class="flex items-start">
+                        <svg class="h-5 w-5 text-primary-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                  <p class="text-sm text-gray-700">
+                    <strong>{service.schedule.title}</strong><br>
+                    <span class="text-sm">{service.schedule.hours}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

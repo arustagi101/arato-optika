@@ -1,0 +1,60 @@
+---
+// Hero section with badge, headline, subheadline, CTAs, and image overlay
+// Hero section component
+---
+
+<section class="hero min-h-[70vh] bg-base-200 relative overflow-hidden">
+    <div class="hero-content flex-col lg:flex-row-reverse max-w-full w-full">
+        <div
+            class="flex-1 relative overflow-hidden rounded-lg shadow-xl max-w-lg"
+        >
+            <img
+                src="/images/webp/szemuveget_visel.webp"
+                alt="Arató Optika"
+                class="w-full h-full object-cover"
+            />
+        </div>
+        <div class="flex-1 max-w-xl py-8">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                <span class="text-primary">Arató Optika</span> - Lásson tiszta képet!
+            </h1>
+            <p class="py-6 text-lg">
+                Több mint 25 éve nyújtunk kiváló minőségű látásvizsgálatot,
+                szemüvegeket és kontaktlencse szolgáltatásokat Zuglóban.
+                Szakemberek segítségével találja meg a tökéletes megoldást
+                látásának javítására!
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a
+                    href="#"
+                    class="btn btn-primary"
+                    data-cal-link="arato-optika/optometriai"
+                    data-cal-namespace="optometriai"
+                    data-cal-config='{"layout":"month_view"}'
+                >
+                    Időpontfoglalás
+                </a>
+                <a
+                    href="tel:+3612205999"
+                    class="btn btn-outline flex items-center gap-2"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-5 h-5"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.25 6.75c0 8.284 6.716 15 15 15h0a2.25 2.25 0 002.25-2.25v-2.1a1.35 1.35 0 00-1.232-1.345l-3.1-.31a1.35 1.35 0 00-1.518 1.35v1.272a12.027 12.027 0 01-6.272-6.272h1.272a1.35 1.35 0 001.35-1.518l-.31-3.1A1.35 1.35 0 006.6 4.5h-2.1A2.25 2.25 0 002.25 6.75z"
+                        ></path>
+                    </svg>
+                    Telefon: +36 1 220 5999
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

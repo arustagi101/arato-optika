@@ -1,0 +1,55 @@
+---
+import { testimonials, sectionContent } from '../data/index';
+---
+
+<section class="bg-base-200 py-20">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">{sectionContent.testimonials.title}</h2>
+      <p class="text-base-content/70 max-w-xl mx-auto">{sectionContent.testimonials.description}</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {testimonials.map(testimonial => (
+        <div class="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <div class="card-body">
+            <div class="flex items-center gap-4 mb-4">
+              <div>
+  {testimonial.useImage && testimonial.imageUrl ? (
+    <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-blue-600 flex items-center justify-center">
+      <img src={testimonial.imageUrl} alt={testimonial.name} class="w-full h-full object-cover" />
+    </div>
+  ) : (
+    <div class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center">
+      <span class="text-xl font-semibold leading-none select-none">{testimonial.initials}</span>
+    </div>
+  )}
+</div>
+              
+              <div>
+                <h3 class="font-bold text-lg">{testimonial.name}</h3>
+                <div class="rating rating-sm">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <input 
+                      type="radio" 
+                      name={`rating-${testimonial.id}`} 
+                      class="mask mask-star-2 bg-primary" 
+                      checked={i < testimonial.rating} 
+                      disabled
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            {testimonial.text && testimonial.text !== '""' && (
+              <div class="text-center">
+                <p class="italic text-base-content/80">"{testimonial.text}"</p>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

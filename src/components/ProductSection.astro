@@ -1,0 +1,114 @@
+---
+// ProductSection.astro
+import BrandScroller from './BrandScroller.astro';
+
+export interface Props {
+  title: string;
+  description: string[];
+  imageUrl: string;
+  imageAlt: string;
+  reverse?: boolean;
+  features?: string[];
+  callout?: string;
+  brands?: Array<{ name: string; logo?: string }>;
+}
+
+const { 
+  title, 
+  description, 
+  imageUrl, 
+  imageAlt, 
+  reverse = false, 
+  features = [], 
+  callout = '',
+  brands = []
+} = Astro.props;
+
+// Responsive spacing with Context7 scale
+const spacing = {
+  section: 'mb-16 md:mb-20 lg:mb-24',
+  content: 'space-y-4 md:space-y-5',
+  heading: 'text-2xl sm:text-3xl lg:text-4xl',
+  paragraph: 'text-gray-700 leading-relaxed text-base md:text-lg',
+  featureIcon: 'h-4 w-4 md:h-5 md:w-5',
+  featureText: 'text-sm md:text-base',
+};
+---
+
+<article class={spacing.section}>
+  <div class={`flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-8 lg:gap-12 items-start`}>
+    {/* Image and Brands Section */}
+    <div class="w-full lg:w-1/2 space-y-6 md:space-y-8">
+      <div class="relative overflow-hidden rounded-lg md:rounded-xl shadow-md transition-all duration-300 group-hover:shadow-lg">
+        <img 
+          src={imageUrl} 
+          alt={imageAlt}
+          width="800"
+          height="450"
+          class="w-full h-auto object-cover aspect-video transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      
+      {brands.length > 0 && (
+        <div class="mt-6 md:mt-8">
+          <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-4 text-center">
+            Kapható márkák nálunk
+          </h3>
+          <div class="relative">
+            <BrandScroller brands={brands} />
+          </div>
+        </div>
+      )}
+    </div>
+    
+    {/* Content Section */}
+    <div class="w-full lg:w-1/2 space-y-4 md:space-y-6">
+      <header>
+        <h2 class={`${spacing.heading} font-bold text-gray-900 mb-3 md:mb-4 relative inline-block`}>
+          {title}
+          <span class="absolute bottom-0 left-0 w-1/3 h-1 bg-primary-500 rounded-full transform -translate-y-1 md:-translate-y-1.5"></span>
+        </h2>
+      </header>
+      
+      <div class="prose prose-sm sm:prose-base md:prose-lg max-w-none">
+        {description.map((paragraph, i) => (
+          <p class={`${spacing.paragraph} mb-3 md:mb-4`}>
+            {paragraph}
+          </p>
+        ))}
+        
+        {features.length > 0 && (
+          <ul class="space-y-2 md:space-y-3 my-4 md:my-6">
+            {features.map((feature) => (
+              <li class="flex items-start">
+                <svg 
+                  class={`${spacing.featureIcon} text-primary-500 mr-2 mt-0.5 flex-shrink-0`} 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class={`${spacing.featureText} text-gray-700`}>
+                  {feature}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+        
+        {callout && (
+          <div class="bg-primary-50 border-l-4 border-primary-500 p-3 md:p-4 my-4 md:my-6 rounded-r">
+            <p class="text-sm md:text-base text-primary-800 font-medium italic">
+              {callout}
+            </p>
+          </div>
+        )}
+      </div>
+      
+      <slot />
+    </div>
+  </div>
+</article>
